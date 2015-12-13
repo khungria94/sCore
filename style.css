@@ -1,0 +1,46 @@
+/* Global */
+body {
+	background-color: #FFFAE8;
+}
+
+#header {
+	background-color: #D49090;
+
+	position: fixed;
+	top: 0px;
+	width: 100%;
+	height: 35px;
+	left: 0px;
+}
+
+#wrapper {
+	white-space: nowrap;
+	max-width: 99%;
+	margin-top: 40px;
+}
+
+#content {
+	width: 74%;
+
+	/* Responsive */
+	display: inline-block;
+	text-align: center;
+	vertical-align: middle;
+	white-space: normal;
+
+
+	background-color: #93D490;
+}
+
+#sidebar {
+	width: 24%;
+
+	/* Responsive */
+	display: inline-block;
+	text-align: center;
+	vertical-align: middle;
+	white-space: normal;
+
+
+	background-color: #90B5D4;
+}
