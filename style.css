@@ -2,6 +2,12 @@
 html, body {
 	background-color: #FFFAE8;
 	height: 100%;
+
+	position: fixed; 
+    overflow-y: scroll;
+    width: 100%;
+    padding: 0px;
+  	margin: 0px;
 }
 
 #header {
@@ -15,9 +21,9 @@ html, body {
 }
 
 #content {
-	width: 74%;
+	width: 75%;
 	white-space: nowrap;
-	margin-top: 40px;
+	margin-top: 35px;
 
 	/* Responsive */
 	display: inline-block;
@@ -30,11 +36,11 @@ html, body {
 
 #sidebar {
 	width: 25%;
-	height: 100%;
+	height: 95%;
 	white-space: nowrap;
-	margin-top: 40px;
+	margin-top: 35px;
+
 	float: right;
-	overflow: visible;
 
 	/* Responsive */
 	display: inline-block;
