@@ -1,6 +1,7 @@
 /* Global */
-body {
+html, body {
 	background-color: #FFFAE8;
+	height: 100%;
 }
 
 #header {
@@ -13,34 +14,33 @@ body {
 	left: 0px;
 }
 
-#wrapper {
-	white-space: nowrap;
-	max-width: 99%;
-	margin-top: 40px;
-}
-
 #content {
 	width: 74%;
+	white-space: nowrap;
+	margin-top: 40px;
 
 	/* Responsive */
 	display: inline-block;
 	text-align: center;
 	vertical-align: middle;
 	white-space: normal;
-
 
 	background-color: #93D490;
 }
 
 #sidebar {
-	width: 24%;
+	width: 25%;
+	height: 100%;
+	white-space: nowrap;
+	margin-top: 40px;
+	float: right;
+	overflow: visible;
 
 	/* Responsive */
 	display: inline-block;
 	text-align: center;
 	vertical-align: middle;
 	white-space: normal;
-
 
 	background-color: #90B5D4;
 }
