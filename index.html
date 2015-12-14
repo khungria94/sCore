@@ -29,7 +29,24 @@
 		</div>
 
 		<div id="sidebar">
-			sidebar
+
+			<div id="search">
+				<form id="songSearch" onsubmit="expand(); return false;">
+					<input type="text" name="sname" placeholder="Search for song..." required>
+					<button>Search</button>
+				</form>
+			</div>
+
+			<div id="results" style="display: none;">
+				<!-- Expands to show results of search -->
+				a thing
+				<button onclick="hide()">Hide</button>
+			</div>
+
+			<div id="playlist">
+				Playlist
+			</div>
+
 		</div>
 
 	</body>

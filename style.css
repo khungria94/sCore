@@ -21,7 +21,10 @@ html, body {
 }
 
 #content {
-	width: 75%;
+	position: fixed;
+
+	width: 76%;
+	height: 95%;
 	white-space: nowrap;
 	margin-top: 35px;
 
@@ -35,12 +38,15 @@ html, body {
 }
 
 #sidebar {
-	width: 25%;
+	position: fixed;
+
+	width: 24%;
 	height: 95%;
 	white-space: nowrap;
 	margin-top: 35px;
 
 	float: right;
+	right: 0px;
 
 	/* Responsive */
 	display: inline-block;
@@ -49,4 +55,19 @@ html, body {
 	white-space: normal;
 
 	background-color: #90B5D4;
+}
+
+#search {
+	background-color: #FFB366;
+	height: 5%;
+}
+
+#playlist {
+	background-color: #FFD9B3;
+	height: 95%;
+}
+
+#results {
+	background-color: white;
+	height: 45%;
 }
