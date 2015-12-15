@@ -31,15 +31,15 @@
 		<div id="sidebar">
 
 			<div id="search">
-				<form id="songSearch" onsubmit="expand(); return false;">
+				<form id="songSearch" onsubmit="expand(this.sname.value); return false;">
 					<input type="text" name="sname" placeholder="Search for song..." required>
 					<button>Search</button>
 				</form>
 			</div>
 
 			<div id="results" style="display: none;">
+				<div class="results_display"></div>
 				<!-- Expands to show results of search -->
-				a thing
 				<button onclick="hide()">Hide</button>
 			</div>
 

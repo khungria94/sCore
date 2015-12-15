@@ -60,6 +60,7 @@ html, body {
 #search {
 	background-color: #FFB366;
 	height: 5%;
+	min-height: 25px;
 }
 
 #playlist {
@@ -68,6 +69,7 @@ html, body {
 }
 
 #results {
+	overflow: auto;
 	background-color: white;
 	height: 45%;
 }
