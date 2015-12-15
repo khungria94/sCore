@@ -13,12 +13,14 @@ var redirect_uri = "http://localhost";
 
 function expand(que) {
 	$('#results').slideDown();
+	$('#hide').slideDown();
 	$('#playlist').animate({height: '50%'});
 	search(que);
 }
 
 function hide() {
 	$('#results').slideUp();
+	$('#hide').slideUp();
 	$('#playlist').animate({height: '95%'});
 }
 
