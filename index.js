@@ -2,7 +2,9 @@ var Mikhail_token = "BQD8Zq9M1GYGD9eLMiS6zMpjhFEJV36YraM6-2VTq8DHKpJEHU7tK1PAZcA
 var Kenneth_token = "BQAtw6BmPEv_baucW-GY-84l_ZDQ3PLsQ7jDvFLxIZiJoud9sW7ZbowcefQPexpvdTmcEbBD3LMWcGALg4WWWV4eRMTsR51JGOkA5_EN0lRHOBbXeybk76yAQ5FylOE8lUTUaQWMySrHTojP_Ga1T3H5xGq0iG6GIw6HHYI";
 var client_id = "9ed7472797b146d1bc5cfaa17f19a6bf";
 var client_secret = "695b5b3e9db24f23bd71fcb8c2f85e8c";
-var redirect_uri = "http://localhost"
+var enkey = 'FIWW1FAOTC35KFT7L';
+var redirect_uri = "http://localhost";
+
 /*
 $.ajax({
 	url: 'https://api.spotify.com/v1/me',
@@ -32,6 +34,50 @@ function expand() {
 }
 
 function hide() {
-	$('#results').slideUp(); 
+	$('#results').slideUp();
 	$('#playlist').animate({height: '95%'});
+}
+
+function search(q) {
+	$.ajax({
+		url: 'https://api.spotify.com/v1/search',
+		data: {
+			q: q,
+			type: 'track,artist',
+			market: 'US'
+		},
+		success: function ENSearchSuccess(data, status, jqxhr){
+			console.log(data);
+		},
+		error: function ENSearchErr(jqxhr, status, err){
+			console.log(jqxhr, status, err);
+		}
+	});
+}
+
+function getTrackInfo(trackId) {
+	$.ajax({
+		url: 'http://developer.echonest.com/api/v4/track/profile',
+		data: {
+			api_key: enkey,
+			format: 'jsonp',
+			id: trackId, // query artist and title fields
+			bucket: 'audio_summary'
+		},
+		dataType: 'jsonp',
+		success: function ENTrackSuccess(data, status, jqxhr){
+			console.log(data);
+			var analysis_url = data && data.response && data.response.track &&
+			data.response.track.audio_summary &&
+			data.response.track.audio_summary.analysis_url;
+			if (!analysis_url) { /*TODO*/ return; }
+
+			$.getJSON(analysis_url, function analSuc(data,status,jqxhr){
+				console.log('anal-', data);
+			});
+		},
+		error: function ENTrackErr(jqxhr, status, err){
+			console.log(jqxhr, status, err);
+		}
+	});
 }
