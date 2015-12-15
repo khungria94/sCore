@@ -37,7 +37,8 @@ function search(q) {
 			var item;
 			for (var i = 0; i < data.tracks.items.length; i++) {
 				item = data.tracks.items[i];
-				$(".results_display").append("<tr><td id = "+item.id+" data-trackid=" + item.id + ">" + item.name + "</td><tr>");
+				$(".results_display").append("<tr draggable='true' ondragstart='drag(event)' id = " +
+					item.id + " data-trackid=" + item.id + "><td>" + item.name + "</td><tr>");
 			}
 			getTrackInfo(item.id);
 		},
@@ -102,3 +103,19 @@ Song.prototype.toPlayWidget = function() {
 	return $('<iframe>', {src: src, width: 300, height: 380, frameborder: '0', allowtransparency: true}).get(0);
  };
 
+// Drag access
+
+function allowDrop(ev) {
+    ev.preventDefault();
+}
+
+function drag(ev) {
+	helper:'clone';
+    ev.dataTransfer.setData("text", ev.target.id);
+}
+
+function drop(ev) {
+    ev.preventDefault();
+    var data = ev.dataTransfer.getData("text");
+    ev.target.appendChild(document.getElementById(data));
+}

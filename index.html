@@ -13,9 +13,12 @@
 		});
 		</script>
 
-
 		<!-- Imports CSS -->
 		<link rel="stylesheet" href="style.css" type="text/css">
+
+		<!-- Imports fonts -->
+		<link href='https://fonts.googleapis.com/css?family=Montserrat|EB+Garamond' rel='stylesheet' type='text/css'>
+
 	</head>
 
 	<body>
@@ -51,7 +54,7 @@
 					<button class="minimize" onclick="hide()">^</button>
 			</div>
 
-			<div id="playlist">
+			<div id="playlist" ondrop="drop(event)" ondragover="allowDrop(event)">
 				Playlist
 			</div>
 
