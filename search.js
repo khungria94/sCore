@@ -35,8 +35,9 @@ function search(q) {
 			var item;
 			for (var i = 0; i < data.tracks.items.length; i++) {
 				item = data.tracks.items[i];
-				$(".results_display").append("<tr><td data-trackid=" + item.id + ">" + item.name + "</td><tr>")
+				$(".results_display").append("<tr><td id = "+item.id+" data-trackid=" + item.id + ">" + item.name + "</td><tr>");
 			}
+			getTrackInfo(item.id);
 		},
 		error: function(data){
 			console.log(data);
