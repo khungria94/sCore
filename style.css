@@ -95,3 +95,14 @@ html, body {
 	min-height: 10px;
 	width: 100%;
 }
+
+.minimize {
+	border: none;
+	background-color: transparent;
+	outline: none; 
+	width: 100%;
+}
+
+.minimize:hover {
+	color: white;
+}
