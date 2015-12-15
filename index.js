@@ -31,6 +31,7 @@ function search(q) {
 			market: 'US'
 		},
 		success: function(data){
+			$(".results_display").empty();
 			for (var i = 0; i < data.tracks.items.length; i++) {
 				$(".results_display").append("<tr><td>" + data.tracks.items[i].name + "</td><tr>")
 			}
