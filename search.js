@@ -51,7 +51,7 @@ function getTrackInfo(trackId) {
 		data: {
 			api_key: enkey,
 			format: 'jsonp',
-			id: trackId, // query artist and title fields
+			id: 'spotify:track:' + trackId, 
 			bucket: 'audio_summary'
 		},
 		dataType: 'jsonp',
