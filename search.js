@@ -39,7 +39,7 @@ function search(q) {
 					item.id + " data-trackid=" + item.id + "><td><img src='" +
 					item.album.images[2].url + "'></td><td>" + item.name + "</td></tr>");
 			}
-			console.log(item);
+			//console.log(item);
 			addListeners();
 		},
 		error: function(data){
@@ -47,6 +47,23 @@ function search(q) {
 		}
 	});
 }
+
+function addListenersPlaylist(){
+	var ids = $('#playlist > tr').map(function(i,e){
+			return $(e).data('trackid')
+		}).get().join('&');
+	//console.log(ids.split('&'));
+	ids = ids.split('&');
+	
+	if(ids){
+		var index = ids.length-1;
+		var song = document.getElementById(ids[index]);
+		var s = new Song(ids[index]);
+		//console.log(index);
+		song.addEventListener("dblclick", function(index){s.getTrackInfo(s.trackid,printSongInfo);},false);
+	}
+}
+
 
 function addListeners(){
 	var table = document.getElementById("results_table");
@@ -79,7 +96,7 @@ function printSongInfo(temp,data){
 	artist.innerHTML = s.artist;
 	album.innerHTML = data.response.track.release;
 	var analysis = data.response.track.audio_summary.analysis_url;
-	//s.analyze(analysis,analyzeinfo);
+	s.analyze(analysis,analyzeinfo);
 	s.getSongInfo(s.title, s.artist, extraSongInfo);
 	var table = document.getElementById("results_table");
 	var rows = table.rows;
@@ -190,7 +207,21 @@ function loadPlaylist(name) {
 	if (localStorage) ids = localStorage.getItem('sCore_' + name).split('&');
 	else alert('Sorry, we cannot do that at this time');
 
-	if (ids) { //not empty string
+	if (ids) { 
+		for(var i = 0; i < ids.length; i++){
+			$.ajax({
+			url: 'https://api.spotify.com/v1/tracks/'+ids[i],
+			success: function(data){
+				$("#playlist").append("<tr class='normal' draggable='true' ondragstart='drag(event)' id = " +
+						data.id + " data-trackid=" + data.id + "><td><img src='" +
+						data.album.images[2].url + "'></td><td>" + data.name + "</td></tr>");
+				addListenersPlaylist();
+			},
+			error: function(data){
+				console.log(data);
+			}
+		});
+		}
 
 	}
 }
@@ -213,8 +244,13 @@ function drop(ev) {
     $('#overlay-solid').css('display', 'none');
     var data = ev.dataTransfer.getData("text");
     document.getElementById('playlist').appendChild(document.getElementById(data));
-    //console.log(ev.target);
+    var temp = 'playlist';
+    savePlaylist(temp);
+    console.log(ev.target);
 }
+
+window.addEventListener('load', loadPlaylist('playlist'));
+//window.onload(loadPlaylist('playlist'));
 
 // function login() {
 //     //var state = generateRandomString(16);
