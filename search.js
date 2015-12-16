@@ -52,10 +52,11 @@ function addListeners(){
 	for(var i = 0; i < rows.length; i++){
 		(function(index){
 			var s = new Song(rows[index].id);
-			rows[index].addEventListener("dblclick", function(){s.getTrackInfo(s.trackid,printSongInfo);},false);
+			rows[index].addEventListener("dblclick", function(index){s.getTrackInfo(s.trackid,printSongInfo);},false);
 		}(i))
 	}
 }
+
 
 function printSongInfo(temp,data){
 	var s = new Song(data.response.track.id,data.response.track.title, data.response.track.artist);
@@ -79,16 +80,25 @@ function printSongInfo(temp,data){
 	var analysis = data.response.track.audio_summary.analysis_url;
 	//s.analyze(analysis,analyzeinfo);
 	s.getSongInfo(s.title, s.artist, extraSongInfo);
-	if(this.className == 'normal'){
-		var table = document.getElementById("results_table");
-		var rows = table.rows;
-		for(var i = 0; i < rows.length; i++)
-			rows[i].className = "normal";
-		this.className = "highlight";
-	}
-	else
-		this.className = 'normal';
+	var table = document.getElementById("results_table");
+	var rows = table.rows;
 	var spotifyid = data.response.track.foreign_id;
+	var id = spotifyid.split(":")[2];
+	for(var i = 0; i < rows.length; i++){
+		if(rows[i].id != id)
+			rows[i].className = "normal";
+		else
+			rows[i].className = 'highlight';
+	}
+	var playlist = document.getElementById("playlist");
+	test = playlist.getElementsByTagName("tr");
+	for(var i = 0; i < test.length; i++){
+		if(test[i].id != id)
+			test[i].className = "normal";
+		else
+			test[i].className = 'highlight';
+	}
+
 	document.getElementById("frameid").src = "https://embed.spotify.com/?uri=" + spotifyid;
 }
 //am assumging that the first search result will be the one that we are playing
@@ -120,6 +130,7 @@ function artistInfo(temp, data){
 }
 
 //this function has all the analysis info to use for the visual part (data has all the information)
+//This is commented out in the PrintSongInfo method
 
 function analyzeinfo(temp,data){
 	console.log(data);
