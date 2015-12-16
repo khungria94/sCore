@@ -13,7 +13,10 @@ var keyMap = {
 	11: 'b'
 };
 var modeMap = { 0: 'Minor', 1: 'Major' };
-
+function tempoMap(tempo) {
+	if (tempo < 60) return 'Slow';
+	else return 'Allegro';
+}
 function confMap(conf) {
 	if (conf < .5) return 'Maybe';
 	else return 'Definitely';
@@ -41,7 +44,7 @@ Song.prototype.addToPlaylist = function(playlistId) {
 			uris: self.toURI()
 		},
 		success: function(data, status) {console.log(data);},
-		error: function(jqxhr, status, err) { console.log(jqxhr, status, err); }
+		error: function(jqxhr, status, err) { console.warn(jqxhr, status, err); }
 	});
 
 return this;
@@ -84,13 +87,14 @@ Song.prototype.getTrackInfo = function getTrackInfo(trackId) {
 			//	self.analyze(analysis_url);
 		},
 		error: function ENTrackErr(jqxhr, status, err){
-			console.log(jqxhr, status, err);
+			console.warn(jqxhr, status, err);
 		}
 	});
 
 	return this;
 }
 
+// Doesn't work that well right now. I think too much variation in titles
 Song.prototype.getSongInfo = function getSongInfo(title, artist) {
 	// Populates song's artistId
 	var self = this;
@@ -105,7 +109,7 @@ Song.prototype.getSongInfo = function getSongInfo(title, artist) {
 		},
 		dataType: 'jsonp',
 		success: function(data, status) {console.log(data); self.artistId = data.response && data.response.songs && data.response.songs[0] && data.response.songs[0].artist_id; console.log(self); },
-		error: function(jqxhr, status, err) { console.log(jqxhr, status, err); }
+		error: function(jqxhr, status, err) { console.warn(jqxhr, status, err); }
 		
 	});
 
@@ -126,8 +130,20 @@ Song.prototype.getArtistInfo = function(artistId) {
 		},
 		dataType: 'jsonp',
 		traditional: true,
-		success: function(data, status) {console.log(data); },
-		error: function(jqxhr, status, err) { console.log(jqxhr, status, err); }
+		success: function(data, status) {
+			console.log(data);
+			var a = data.response.artist;
+			self.artistObj = {
+				location: a.artist_location.location,
+				bio: a.biographies, // license, site, text, truncated, url
+				genres: a.genres.map(function(x) { return x.name; /* don't know how reliable */ }),
+				pics: a.images.map(function(x) { return {url: x.url, verified: x.verified, h: x.height, w: x.width}}), // not all populated
+				songs: a.songs, // duplicate titles
+				terms: a.terms, // frequency 0-1, name, weight 0-1
+				years: a.years_active
+			};
+		 },
+		error: function(jqxhr, status, err) { console.warn(jqxhr, status, err); }
 		
 	});
 
@@ -144,6 +160,7 @@ Song.prototype.analyze = function(url){
 		modeString: modeMap[data.track.mode],
 		modeConfString: confMap(data.track.mode_confidence),
 		tempo: data.track.tempo,
+		tempoString: tempoMap(data.track.tempo),
 		tempoConf: confMap(data.track.tempo_confidence),
 		timeSig: data.track.time_signature, // over 4. val of 1 means complex or changing
 		timeSigConf: confMap(data.track.time_signature_confidence)
