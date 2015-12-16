@@ -28,6 +28,11 @@ button {
 	background: #FFED66;
 	color: black;
 	border: none;
+	outline: 0;
+}
+
+button:hover {
+	color: white;
 }
 
 .highlight{
@@ -158,7 +163,7 @@ button {
 
 #results {
 	overflow: auto;
-	background-color: white;
+	background-color: black;
 	height: 42%;
 }
 
