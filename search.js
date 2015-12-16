@@ -126,6 +126,23 @@ function analyzeinfo(temp,data){
 
 }
 
+function savePlaylist(name) {
+	var ids = $('#playlist > tr').map(function(i,e){
+			return $(e).data('trackid')
+		}).get().join('&');
+	if (localStorage) localStorage.setItem('sCore_' + name, ids);
+	else alert('Sorry, we cannot do that at this time');
+}
+
+function loadPlaylist(name) {
+	var ids;
+	if (localStorage) ids = localStorage.getItem('sCore_' + name).split('&');
+	else alert('Sorry, we cannot do that at this time');
+
+	if (ids) { //not empty string
+
+	}
+}
 
 // Drag access
 
