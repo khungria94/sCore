@@ -8,9 +8,6 @@ var token;
 // Echonest API
 var enkey = 'FIWW1FAOTC35KFT7L';
 
-// Universal
-var redirect_uri = "file:///Users/Kenneth/UIDesign/sCore/index.html";
-
 function expand(que) {
 	$('#results').slideDown();
 	$('#hide').slideDown();
@@ -25,7 +22,7 @@ function hide() {
 }
 
 function search(q) {
-	console.log(redirect_uri);
+
 	$.ajax({
 		url: 'https://api.spotify.com/v1/search',
 		data: {
@@ -38,9 +35,10 @@ function search(q) {
 			var item;
 			for (var i = 0; i < data.tracks.items.length; i++) {
 				item = data.tracks.items[i];
-				$(".results_display").append("<tr draggable='true' ondragstart='drag(event)' id = " +
-					item.id + " data-trackid=" + item.id + "><td>" + item.name + "</td><tr>");
+				$(".results_display").append("<tr class='normal' draggable='true' ondragstart='drag(event)' id = " +
+					item.id + " data-trackid=" + item.id + "><td>" + item.name + "</td></tr>");
 			}
+			addListeners();
 		},
 		error: function(data){
 			console.log(data);
@@ -48,31 +46,28 @@ function search(q) {
 	});
 }
 
-function getTrackInfo(trackId) {
-	$.ajax({
-		url: 'http://developer.echonest.com/api/v4/track/profile',
-		data: {
-			api_key: enkey,
-			format: 'jsonp',
-			id: 'spotify:track:' + trackId, 
-			bucket: 'audio_summary'
-		},
-		dataType: 'jsonp',
-		success: function ENTrackSuccess(data, status, jqxhr){
-			console.log(data);
-			var analysis_url = data && data.response && data.response.track &&
-			data.response.track.audio_summary &&
-			data.response.track.audio_summary.analysis_url;
-			if (!analysis_url) { /*TODO*/ return; }
+function addListeners(){
+	var table = document.getElementById("results_table");
+	var rows = table.rows;
+	for(var i = 0; i < rows.length; i++){
+		rows[i].addEventListener("dblclick", printSongInfo);
+	}
+}
 
-			$.getJSON(analysis_url, function analSuc(data,status,jqxhr){
-				console.log('anal-', data);
-			});
-		},
-		error: function ENTrackErr(jqxhr, status, err){
-			console.log(jqxhr, status, err);
-		}
-	});
+function printSongInfo(){
+	var s = new Song(this.id);
+	s.getTrackInfo(this.id);
+	//console.log(s.title + " by " + s.artist);
+	var table = document.getElementById("infotable");
+	var rows = table.rows;
+	for(var i = 0; i < rows.length; i++){
+		var x = rows[i].insertCell(1);
+		x.innerHTML = s.artist;
+	}
+	if(this.className == 'normal')
+		this.className = 'highlight';
+	else
+		this.className = 'normal';
 }
 
 
@@ -94,18 +89,6 @@ function drop(ev) {
     $('#overlay-solid').css('display', 'none');
     var data = ev.dataTransfer.getData("text");
     ev.target.appendChild(document.getElementById(data));
-}
-
-function login() {
-    //var state = generateRandomString(16);
-    //localStorage.setItem(stateKey, state);
-    var scope = 'user-read-private user-read-email playlist-modify-public playlist-modify-private user-read-birthdate';
-    var url = 'https://accounts.spotify.com/authorize';
-    url += '?response_type=token';
-    url += '&client_id=' + encodeURIComponent(client_id);
-    url += '&scope=' + encodeURIComponent(scope);
-    url += '&redirect_uri=' + encodeURIComponent(redirect_uri);
-    window.location = url;
 }
 
 

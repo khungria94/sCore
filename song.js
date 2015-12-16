@@ -90,7 +90,6 @@ Song.prototype.getTrackInfo = function getTrackInfo(trackId) {
 			console.warn(jqxhr, status, err);
 		}
 	});
-
 	return this;
 }
 
@@ -112,7 +111,6 @@ Song.prototype.getSongInfo = function getSongInfo(title, artist) {
 		error: function(jqxhr, status, err) { console.warn(jqxhr, status, err); }
 		
 	});
-
 	return this;
 }
 

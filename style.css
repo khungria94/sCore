@@ -10,6 +10,10 @@ html, body {
     padding: 0px;
   	margin: 0px;
 }
+.highlight{
+    background: #D1D0D0;
+}
+
 
 #button{
 	text-align: right;
@@ -141,3 +145,44 @@ html, body {
 .minimize:hover {
 	color: white;
 }
+
+.highlight{
+    background: #D1D0D0;
+}
+
+.normal{
+    background: #FAFFF3;
+
+}
+
+.normal:hover{
+    background-color: #ffff99;
+
+}
+
+.highlight:hover{
+	background-color:#ffff99;
+}
+
+
+.infotable {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    width: 50%;
+    border-collapse: collapse;
+    margin-left: auto;
+    margin-right: auto; 
+
+}
+
+.infotable td, #infotable th {
+    font-size: 1em;
+    padding: 3px 7px 2px 7px;
+    width: 100%;
+    text-align: center;
+
+}
+
+
+
+
+

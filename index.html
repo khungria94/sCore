@@ -4,7 +4,7 @@
 
 		<!-- Imports JS stylesheets + Jquery -->
 		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-		<script src="song.js"></script>
+		<script type="text/javascript" src="song.js"></script>
 		<script type="text/javascript" src="search.js"></script>
 
 		<!-- Used to load header across all pages -->
@@ -26,9 +26,7 @@
 	<body>
 
 		<div id="header">
-			<div id = "button">
-				<button id="login" onclick = "login()">Log in with Spotify</button>
-			</div>
+
 			<!-- Imported from header.html -->
 		</div>
 
@@ -37,7 +35,15 @@
 			visual
 			</div>
 			<div id="info">
-			info
+				<table class = "infotable" id = "infotable">
+					<tr><td>Song</td></tr>
+					<tr><td>Artist</td></tr>
+					<tr><td>Album</td></tr>
+					<tr><td>Genre</td></tr>
+					<tr><td>Biography</td></tr>
+					<tr><td>Artist Origin</td></tr>
+					<tr><td>Years Active</td></tr>
+				</table>
 			</div>			
 
 		</div>
@@ -52,7 +58,7 @@
 			</div>
 
 			<div id="results" style="display: none;">
-				<div class="results_display"></div>
+				<table id = "results_table" class="results_display"></table>
 				<!-- Expands to show results of search -->
 			</div>
 			<div id="hide" style="display: none;">
