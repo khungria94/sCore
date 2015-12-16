@@ -162,7 +162,7 @@ function analyzeinfo(temp,data){
 }
 
 function loadVisuals(data) {
-	$('#visual').empty();
+	$('#visual > *').empty();
 	var text, tar, id, l, SHRINK_FACTOR = 0.8;
 	data.forEach(function(e,index,a){
 		html = 'This section is ' + confMap(e.key_confidence) +
@@ -175,7 +175,7 @@ function loadVisuals(data) {
 		$('<div>', {
 			'id': 'vizinfo-' + index,
 			'html': html
-		}).appendTo('#visual');
+		}).hide().appendTo('#visual #viz-info');
 
 		$('<div>', {
 			'width': (100 * e.proportion * SHRINK_FACTOR) + '%',
@@ -191,7 +191,7 @@ function loadVisuals(data) {
 				else $('#vizinfo-' + i).hide();
 			}
 		})
-		.appendTo('#visual');
+		.appendTo('#visual #viz-sects');
 	});
 }
 
@@ -205,7 +205,10 @@ function savePlaylist(name) {
 
 function loadPlaylist(name) {
 	var ids;
-	if (localStorage) ids = localStorage.getItem('sCore_' + name).split('&');
+	if (localStorage) 
+		if(localStorage.getItem('sCore_' + name))
+			ids = localStorage.getItem('sCore_' + name).split('&');
+		else console.warn('Sorry, something went wrong saving the playlist');
 	else alert('Sorry, we cannot do that at this time');
 
 	if (ids) { 

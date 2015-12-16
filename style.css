@@ -277,3 +277,11 @@ button:hover {
 	border: yellow 4px solid;
 
 }
+
+#viz-sects {
+	height: 75%;
+}
+
+#viz-info {
+	height: 25%;
+}
