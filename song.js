@@ -30,7 +30,7 @@ function Song(trackid, title, artist) {
 	return this;
 };
 
-Song.prototype.addToPlaylist = function(playlistId) {
+Song.prototype.addToPlaylist = function(playlistId, cb) {
 	var url = 'https://api.spotify.com/v1/users/' + user_id + '/playlists/' + playlistId + '/tracks', self = this;
 
 	$.ajax({
@@ -43,8 +43,8 @@ Song.prototype.addToPlaylist = function(playlistId) {
 		data: {
 			uris: self.toURI()
 		},
-		success: function(data, status) {console.log(data);},
-		error: function(jqxhr, status, err) { console.warn(jqxhr, status, err); }
+		success: function(data, status) {console.log(data); if (cb) cb(null, data); },
+		error: function(jqxhr, status, err) { console.warn(jqxhr, status, err); if (cb) cb(err); }
 	});
 
 return this;
@@ -56,7 +56,7 @@ Song.prototype.toPlayWidget = function() {
 	return $('<iframe>', {src: src, width: 300, height: 380, frameborder: '0', allowtransparency: true}).eq(0);
  };
 
-Song.prototype.getTrackInfo = function getTrackInfo(trackId) {
+Song.prototype.getTrackInfo = function getTrackInfo(trackId, cb) {
 	// Populates song's title and artist
 	var self = this;
 	$.ajax({
@@ -85,9 +85,10 @@ Song.prototype.getTrackInfo = function getTrackInfo(trackId) {
 				console.log('anal-', data);
 			});*/
 			//	self.analyze(analysis_url);
+			if (cb) cb(null, data);
 		},
 		error: function ENTrackErr(jqxhr, status, err){
-			console.warn(jqxhr, status, err);
+			console.warn(jqxhr, status, err); if (cb) cb(err);
 		}
 	});
 
@@ -95,7 +96,7 @@ Song.prototype.getTrackInfo = function getTrackInfo(trackId) {
 }
 
 // Doesn't work that well right now. I think too much variation in titles
-Song.prototype.getSongInfo = function getSongInfo(title, artist) {
+Song.prototype.getSongInfo = function getSongInfo(title, artist, cb) {
 	// Populates song's artistId
 	var self = this;
 	
@@ -108,8 +109,8 @@ Song.prototype.getSongInfo = function getSongInfo(title, artist) {
 			artist: artist || this.artist
 		},
 		dataType: 'jsonp',
-		success: function(data, status) {console.log(data); self.artistId = data.response && data.response.songs && data.response.songs[0] && data.response.songs[0].artist_id; console.log(self); },
-		error: function(jqxhr, status, err) { console.warn(jqxhr, status, err); }
+		success: function(data, status) {console.log(data); self.artistId = data.response && data.response.songs && data.response.songs[0] && data.response.songs[0].artist_id; console.log(self); if (cb) cb(null, data); },
+		error: function(jqxhr, status, err) { console.warn(jqxhr, status, err); if (cb) cb(err); }
 		
 	});
 
@@ -117,7 +118,7 @@ Song.prototype.getSongInfo = function getSongInfo(title, artist) {
 }
 
 
-Song.prototype.getArtistInfo = function(artistId) {
+Song.prototype.getArtistInfo = function(artistId, cb) {
 	var self = this;
 	
 	$.ajax({
@@ -142,8 +143,9 @@ Song.prototype.getArtistInfo = function(artistId) {
 				terms: a.terms, // frequency 0-1, name, weight 0-1
 				years: a.years_active
 			};
+			if (cb) cb(null, artistObj, data);
 		 },
-		error: function(jqxhr, status, err) { console.warn(jqxhr, status, err); }
+		error: function(jqxhr, status, err) { console.warn(jqxhr, status, err); if (cb) cb(err); }
 		
 	});
 
@@ -151,7 +153,7 @@ Song.prototype.getArtistInfo = function(artistId) {
 
 }
 
-Song.prototype.analyze = function(url){
+Song.prototype.analyze = function(url, cb){
 	var self = this;
 	$.getJSON(url, function(data,status,jqxhr){
 		var r = {
@@ -164,7 +166,7 @@ Song.prototype.analyze = function(url){
 		tempoConf: confMap(data.track.tempo_confidence),
 		timeSig: data.track.time_signature, // over 4. val of 1 means complex or changing
 		timeSigConf: confMap(data.track.time_signature_confidence)
-		};	console.log('anal-', data, r);
+		};	console.log('anal-', data, r); if (cb) cb(null, r, data);
 	});
 	
 }
