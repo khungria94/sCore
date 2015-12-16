@@ -11,6 +11,14 @@ html, body {
   	margin: 0px;
 }
 
+#bg {
+	background-color: black;
+}
+
+#card {
+	display: inline-block;
+}
+
 input {
 	font-family: 'Montserrat';
 	border: none;

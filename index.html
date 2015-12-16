@@ -25,56 +25,56 @@
 
 	<body>
 
-		<div id="header">
-
-			<!-- Imported from header.html -->
-		</div>
-
-		<div id="content" ondrop = "deletedrop(event)" ondragover="allowDrop(event)">
-			<div id="visual">
-			</div>
-			<div id="info">
-				<div class = "widget">
-					<iframe id = "frameid" src="https://embed.spotify.com/?uri=spotify:track:" width="273" height="80" frameborder="0" allowtransparency="true"></iframe>
+		<div id="bg">
+			<div id="card">
+				<div id="header">
+					<!-- Imported from header.html -->
 				</div>
-				<div class = "table">
-					<table class = "infotable" id = "infotable">
-						<tr><td class = "col1">Song:</td></tr>
-						<tr><td class = "col1">Artist:</td></tr>
-						<tr><td class = "col1">Album:</td></tr>
-						<tr><td class = "col1">Genres:</td></tr>
-						<tr><td class = "col1">Biography:</td></tr>
-						<tr><td class = "col1">Artist Origin:</td></tr>
-						<tr><td class = "col1">Made Debut:</td></tr>
-					</table>
+
+				<div id="content" ondrop = "deletedrop(event)" ondragover="allowDrop(event)">
+					<div id="visual"></div>
+					<div id="info">
+						<div class = "widget">
+							<iframe id = "frameid" src="https://embed.spotify.com/?uri=spotify:track:" width="273" height="80" frameborder="0" allowtransparency="true"></iframe>
+						</div>
+						<div class = "table">
+							<table class = "infotable" id = "infotable">
+								<tr><td class = "col1">Song:</td></tr>
+								<tr><td class = "col1">Artist:</td></tr>
+								<tr><td class = "col1">Album:</td></tr>
+								<tr><td class = "col1">Genres:</td></tr>
+								<tr><td class = "col1">Biography:</td></tr>
+								<tr><td class = "col1">Artist Origin:</td></tr>
+								<tr><td class = "col1">Made Debut:</td></tr>
+							</table>
+						</div>
+					</div>			
 				</div>
-			</div>			
 
-		</div>
+				<div id="sidebar">
+					<div id="search">
+						<form id="songSearch" onsubmit="expand(this.sname.value); return false;">
+							<input type="text" name="sname" placeholder="Search for song..." required>
+							<button>Search</button>
+						</form>
+					</div>
 
-		<div id="sidebar">
-			<div id="search">
-				<form id="songSearch" onsubmit="expand(this.sname.value); return false;">
-					<input type="text" name="sname" placeholder="Search for song..." required>
-					<button>Search</button>
-				</form>
+					<div id="results" style="display: none;">
+						<table id = "results_table" class="results_display"></table>
+						<!-- Expands to show results of search -->
+					</div>
+					<div id="hide" style="display: none;">
+						<button class="minimize" onclick="hide()">^</button>
+					</div>
+
+					<div id="playlist" ondrop="drop(event)" ondragover="allowDrop(event)">
+						<div id="playlist_header">Playlist</div>
+						<!-- The two overlay divs show where to drag draggable elements -->
+						<div id="overlay-border" style="display: none;">Drag Here</div>
+						<div id="overlay-solid" style="display: none;"></div>
+					</div>
+				</div>
 			</div>
-
-			<div id="results" style="display: none;">
-				<table id = "results_table" class="results_display"></table>
-				<!-- Expands to show results of search -->
-			</div>
-			<div id="hide" style="display: none;">
-					<button class="minimize" onclick="hide()">^</button>
-			</div>
-
-			<div id="playlist" ondrop="drop(event)" ondragover="allowDrop(event)">
-				<div id="playlist_header">Playlist</div>
-				<!-- The two overlay divs show where to drag draggable elements -->
-				<div id="overlay-border" style="display: none;">Drag Here</div>
-				<div id="overlay-solid" style="display: none;"></div>
-			</div>
-
 		</div>
 
 	</body>
