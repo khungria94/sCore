@@ -83,12 +83,15 @@ function allowDrop(ev) {
 }
 
 function drag(ev) {
-	helper:'clone';
     ev.dataTransfer.setData("text", ev.target.id);
+    $('#overlay-solid').css('display', 'inherit');
+    $('#overlay-border').css('display', 'inherit');
 }
 
 function drop(ev) {
     ev.preventDefault();
+    $('#overlay-border').css('display', 'none');
+    $('#overlay-solid').css('display', 'none');
     var data = ev.dataTransfer.getData("text");
     ev.target.appendChild(document.getElementById(data));
 }

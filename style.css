@@ -89,6 +89,36 @@ html, body {
 	height: 95%;
 }
 
+#overlay-solid {
+	pointer-events: none;
+    position: absolute;
+    top, left: 0;
+    width: 100%;
+    height: inherit;
+    background-color: black;
+    filter:alpha(opacity=50);
+    -moz-opacity:0.5;
+    -khtml-opacity: 0.5;
+    opacity: 0.5;
+    z-index: 10;
+}
+
+#overlay-border {
+	padding-top: 40px;
+	border-width: 5px;
+	border-color: white;
+	pointer-events: none;
+	color: white;
+	font-size: 2em;
+	text-shadow: 0px 1px 1px black;
+
+	position: absolute;
+    top, left: 0;
+    width: 100%;
+    height: inherit;
+    z-index: 11;
+}
+
 #results {
 	overflow: auto;
 	background-color: white;
