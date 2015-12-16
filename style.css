@@ -93,7 +93,7 @@ button:hover {
     top: -50px;
     left: 0;
     width: 99%;
-    height: 150%;
+    height: 160%;
     background-color: red;
     filter:alpha(opacity=50);
     -moz-opacity:0.5;
