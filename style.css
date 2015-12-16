@@ -10,6 +10,10 @@ html, body {
   	margin: 0px;
 }
 
+#button{
+	text-align: right;
+}
+
 #header {
 	background-color: #D49090;
 

@@ -3,13 +3,13 @@ var Mikhail_token = "BQAWq52LPA-hVh5tkhCFfR6hGfH1LMoVENR0NUBrmj4_WNr9n3AtOWEAaEs
 var Kenneth_token = "BQAtw6BmPEv_baucW-GY-84l_ZDQ3PLsQ7jDvFLxIZiJoud9sW7ZbowcefQPexpvdTmcEbBD3LMWcGALg4WWWV4eRMTsR51JGOkA5_EN0lRHOBbXeybk76yAQ5FylOE8lUTUaQWMySrHTojP_Ga1T3H5xGq0iG6GIw6HHYI";
 var client_id = "9ed7472797b146d1bc5cfaa17f19a6bf";
 var client_secret = "695b5b3e9db24f23bd71fcb8c2f85e8c";
+var token;
 
 // Echonest API
 var enkey = 'FIWW1FAOTC35KFT7L';
 
 // Universal
-var redirect_uri = "http://localhost";
-
+var redirect_uri = "file:///Users/Kenneth/UIDesign/sCore/index.html";
 
 function expand(que) {
 	$('#results').slideDown();
@@ -25,6 +25,7 @@ function hide() {
 }
 
 function search(q) {
+	console.log(redirect_uri);
 	$.ajax({
 		url: 'https://api.spotify.com/v1/search',
 		data: {
@@ -39,7 +40,6 @@ function search(q) {
 				item = data.tracks.items[i];
 				$(".results_display").append("<tr><td id = "+item.id+" data-trackid=" + item.id + ">" + item.name + "</td><tr>");
 			}
-			getTrackInfo(item.id);
 		},
 		error: function(data){
 			console.log(data);
@@ -101,4 +101,19 @@ Song.prototype.toPlayWidget = function() {
 	var src = 'https://embed.spotify.com/?uri=' + this.toURI();
 	return $('<iframe>', {src: src, width: 300, height: 380, frameborder: '0', allowtransparency: true}).get(0);
  };
+
+function login() {
+    //var state = generateRandomString(16);
+    //localStorage.setItem(stateKey, state);
+    var scope = 'user-read-private user-read-email playlist-modify-public playlist-modify-private user-read-birthdate';
+    var url = 'https://accounts.spotify.com/authorize';
+    url += '?response_type=token';
+    url += '&client_id=' + encodeURIComponent(client_id);
+    url += '&scope=' + encodeURIComponent(scope);
+    url += '&redirect_uri=' + encodeURIComponent(redirect_uri);
+    window.location = url;
+}
+
+
+
 
