@@ -1,4 +1,26 @@
+var keyMap = {
+	0: 'c',
+	1: 'c-sharp',
+	2: 'd',
+	3: 'e-flat',
+	4: 'e',
+	5: 'f',
+	6: 'f-sharp',
+	7: 'g',
+	8: 'a-flat',
+	9: 'a',
+	10: 'b-flat',
+	11: 'b'
+};
+var modeMap = { 0: 'Minor', 1: 'Major' };
+
+function confMap(conf) {
+	if (conf < .5) return 'Maybe';
+	else return 'Definitely';
+}
+
 function Song(trackid, title, artist) {
+	// may also have artistId
 	this.trackid = trackid || '';
 	this.title = title || '';
 	this.artist = artist || '';
@@ -56,9 +78,10 @@ Song.prototype.getTrackInfo = function getTrackInfo(trackId) {
 			} else { /*TODO*/ return; }
 			if (!analysis_url) { /*TODO*/ return; }
 
-			$.getJSON(analysis_url, function analSuc(data,status,jqxhr){
+			/*$.getJSON(analysis_url, function analSuc(data,status,jqxhr){
 				console.log('anal-', data);
-			});
+			});*/
+			//	self.analyze(analysis_url);
 		},
 		error: function ENTrackErr(jqxhr, status, err){
 			console.log(jqxhr, status, err);
@@ -113,8 +136,18 @@ Song.prototype.getArtistInfo = function(artistId) {
 }
 
 Song.prototype.analyze = function(url){
+	var self = this;
 	$.getJSON(url, function(data,status,jqxhr){
-		console.log('anal-', data);
+		var r = {
+		keyString: keyMap[data.track.key],
+		keyConfString: confMap(data.track.key_confidence),
+		modeString: modeMap[data.track.mode],
+		modeConfString: confMap(data.track.mode_confidence),
+		tempo: data.track.tempo,
+		tempoConf: confMap(data.track.tempo_confidence),
+		timeSig: data.track.time_signature, // over 4. val of 1 means complex or changing
+		timeSigConf: confMap(data.track.time_signature_confidence)
+		};	console.log('anal-', data, r);
 	});
 	
 }
