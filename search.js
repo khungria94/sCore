@@ -37,7 +37,8 @@ function search(q) {
 				item = data.tracks.items[i];
 				$(".results_display").append("<tr class='normal' draggable='true' ondragstart='drag(event)' id = " +
 					item.id + " data-trackid=" + item.id + "><td><img src='" +
-					item.album.images[2].url + "'></td><td>" + item.name + "</td></tr>");
+					item.album.images[2].url + "'></td><td>" + item.name + 
+					"<br><font style='font-size:.8em; color: grey'><i>by: " + item.artists[0].name + "</i></font></td></tr>");
 			}
 			//console.log(item);
 			addListeners();
