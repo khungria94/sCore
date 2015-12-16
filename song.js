@@ -14,11 +14,21 @@ var keyMap = {
 };
 var modeMap = { 0: 'Minor', 1: 'Major' };
 function tempoMap(tempo) {
-	if (tempo < 60) return 'Slow';
-	else return 'Allegro';
+	if (tempo < 45) return 'Grave';
+	else if (tempo < 60) return 'Largo';
+	else if (tempo < 76) return 'Adagio';
+	else if (tempo < 108) return 'Andante';
+	else if (tempo < 120) return 'Moderato';
+	else if (tempo < 168) return 'Allegro';
+	else if (tempo < 176) return 'Vivace';
+	else if (tempo < 200) return 'Presto';
+	else return 'Prestissimo';
 }
 function confMap(conf) {
-	if (conf < 0.5) return 'maybe';
+	if (conf < 0.15) return 'probably not';
+	else if (conf < 0.3) return 'possibly';
+	else if (conf < 0.5) return 'maybe';
+	else if (conf < 0.85) return 'probably';
 	else return 'definitely';
 }
 
