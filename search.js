@@ -75,33 +75,6 @@ function getTrackInfo(trackId) {
 	});
 }
 
-function Song(trackid){
-	this.trackid = trackid;
-	return this;
-};
-
-Song.prototype.addToPlaylist = function(playlistId) {
-	var url = 'https://api.spotify.com/v1/users/' + user_id + '/playlists/' + playlistId + '/tracks', self = this;
-
-	$.ajax({
-		method: 'POST',
-		url: url,
-		headers: {
-			'Authorization': 'Bearer ' + Mikhail_token
-		},
-		data: {
-			uris: self.toURI()
-		},
-		success: function(data, status) {console.log(data);},
-		error: function(jqxhr, status, err) { console.log(jqxhr, status, err); }
-	});
-};
-
-Song.prototype.toURI = function() { return 'spotify:track:' + this.trackid; };
-Song.prototype.toPlayWidget = function() {
-	var src = 'https://embed.spotify.com/?uri=' + this.toURI();
-	return $('<iframe>', {src: src, width: 300, height: 380, frameborder: '0', allowtransparency: true}).get(0);
- };
 
 // Drag access
 
@@ -119,3 +92,4 @@ function drop(ev) {
     var data = ev.dataTransfer.getData("text");
     ev.target.appendChild(document.getElementById(data));
 }
+
