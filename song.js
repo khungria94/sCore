@@ -28,7 +28,7 @@ return this;
 Song.prototype.toURI = function() { return 'spotify:track:' + this.trackid; };
 Song.prototype.toPlayWidget = function() {
 	var src = 'https://embed.spotify.com/?uri=' + this.toURI();
-	return $('<iframe>', {src: src, width: 300, height: 380, frameborder: '0', allowtransparency: true}).get(0);
+	return $('<iframe>', {src: src, width: 300, height: 380, frameborder: '0', allowtransparency: true}).eq(0);
  };
 
 Song.prototype.getTrackInfo = function getTrackInfo(trackId) {
