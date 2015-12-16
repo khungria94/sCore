@@ -245,9 +245,14 @@ function drag(ev) {
 
 function playlistdrag(ev) {
     ev.dataTransfer.setData("text", ev.target.id);
+	$('#content-solid').css('display', 'inherit');
+    $('#content-border').css('display', 'inherit');
 }
 
 function deletedrop(ev){
+	ev.preventDefault();
+	$('#content-border').css('display', 'none');
+    $('#content-solid').css('display', 'none');
 	var data = ev.dataTransfer.getData("text");
 	var x = document.getElementById(data);
 	x.parentNode.removeChild(x);
