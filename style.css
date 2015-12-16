@@ -109,8 +109,6 @@ html, body {
 
 #overlay-border {
 	padding-top: 40px;
-	border-width: 5px;
-	border-color: white;
 	pointer-events: none;
 	color: white;
 	font-size: 2em;
@@ -120,6 +118,11 @@ html, body {
     top, left: 0;
     width: 100%;
     height: inherit;
+    filter:alpha(opacity=60);
+    -moz-opacity:0.6;
+    -khtml-opacity: 0.6;
+    opacity: 0.6;
+    z-index: 10;
     z-index: 11;
 }
 
@@ -203,10 +206,3 @@ html, body {
     text-overflow: ellipsis;
 
 }
-
-
-
-
-
-
-
