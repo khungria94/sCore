@@ -58,6 +58,8 @@ Song.prototype.toPlayWidget = function() {
 
 Song.prototype.getTrackInfo = function getTrackInfo(trackId, cb) {
 	// Populates song's title and artist
+	if (typeof trackId === 'function' && cb === undefined) { cb = trackId; trackId = null; }
+
 	var self = this;
 	$.ajax({
 		url: 'http://developer.echonest.com/api/v4/track/profile',
@@ -73,13 +75,12 @@ Song.prototype.getTrackInfo = function getTrackInfo(trackId, cb) {
 
 			if (data && data.response && data.response.track) {
 		
-			var analysis_url = data.response.track.audio_summary &&
+			self.analysis_url = data.response.track.audio_summary &&
 			data.response.track.audio_summary.analysis_url;
 			self.title = data.response.track.title;
 			self.artist = data.response.track.artist;
 		
 			} else { /*TODO*/ return; }
-			if (!analysis_url) { /*TODO*/ return; }
 
 			/*$.getJSON(analysis_url, function analSuc(data,status,jqxhr){
 				console.log('anal-', data);
@@ -97,6 +98,10 @@ Song.prototype.getTrackInfo = function getTrackInfo(trackId, cb) {
 // Doesn't work that well right now. I think too much variation in titles
 Song.prototype.getSongInfo = function getSongInfo(title, artist, cb) {
 	// Populates song's artistId
+	if (typeof title === 'function' && cb === undefined) { cb = title; title = null; }
+	else if (typeof title === 'string' && typeof artist === 'function' && 
+		cb === undefined) { cb = artist; artist = null; }
+
 	var self = this;
 	
 	$.ajax({
@@ -117,6 +122,7 @@ Song.prototype.getSongInfo = function getSongInfo(title, artist, cb) {
 
 
 Song.prototype.getArtistInfo = function(artistId, cb) {
+	if (typeof artistId === 'function' && cb === undefined) { cb = artistId; artistId = null; }
 	var self = this;
 	
 	$.ajax({
@@ -141,7 +147,7 @@ Song.prototype.getArtistInfo = function(artistId, cb) {
 				terms: a.terms, // frequency 0-1, name, weight 0-1
 				years: a.years_active
 			};
-			if (cb) cb(null, artistObj, data);
+			if (cb) cb(null, data);
 		 },
 		error: function(jqxhr, status, err) { console.warn(jqxhr, status, err); if (cb) cb(err); }
 		
@@ -152,9 +158,11 @@ Song.prototype.getArtistInfo = function(artistId, cb) {
 }
 
 Song.prototype.analyze = function(url, cb){
+	if (typeof url === 'string' && cb === undefined) { cb = url; url = null; }
+	
 	var self = this;
-	$.getJSON(url, function(data,status,jqxhr){
-		var r = {
+	$.getJSON(url || self.analysis_url, function(data,status,jqxhr){
+		self.analysis = {
 		keyString: keyMap[data.track.key],
 		keyConfString: confMap(data.track.key_confidence),
 		modeString: modeMap[data.track.mode],
@@ -164,8 +172,15 @@ Song.prototype.analyze = function(url, cb){
 		tempoConf: confMap(data.track.tempo_confidence),
 		timeSig: data.track.time_signature, // over 4. val of 1 means complex or changing
 		timeSigConf: confMap(data.track.time_signature_confidence)
-		};	console.log('anal-', data, r); if (cb) cb(null, r, data);
+		};	console.log('anal-', data, self.analysis); if (cb) cb(null, data);
 	});
 	
+}
+
+Song.prototype.getAllInfo = function() {
+	var self = this;
+	this.getTrackInfo(function(){ self.getSongInfo(function(){ 
+		self.getArtistInfo(function() { self.analyze();}); 
+	}); });
 }
 
