@@ -1,5 +1,6 @@
 /* Global */
 html, body {
+	font-family: 'Montserrat';
 	background-color: #FFFAE8;
 	height: 100%;
 
@@ -98,4 +99,15 @@ html, body {
 	height: 3%;
 	min-height: 10px;
 	width: 100%;
+}
+
+.minimize {
+	border: none;
+	background-color: transparent;
+	outline: none; 
+	width: 100%;
+}
+
+.minimize:hover {
+	color: white;
 }

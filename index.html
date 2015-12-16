@@ -4,6 +4,7 @@
 
 		<!-- Imports JS stylesheets + Jquery -->
 		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+		<script src="song.js"></script>
 		<script type="text/javascript" src="search.js"></script>
 
 		<!-- Used to load header across all pages -->
@@ -14,9 +15,12 @@
 		});
 		</script>
 
-
 		<!-- Imports CSS -->
 		<link rel="stylesheet" href="style.css" type="text/css">
+
+		<!-- Imports fonts -->
+		<link href='https://fonts.googleapis.com/css?family=Montserrat|EB+Garamond' rel='stylesheet' type='text/css'>
+
 	</head>
 
 	<body>
@@ -52,10 +56,10 @@
 				<!-- Expands to show results of search -->
 			</div>
 			<div id="hide" style="display: none;">
-					<button onclick="hide()">Hide</button>
+					<button class="minimize" onclick="hide()">^</button>
 			</div>
 
-			<div id="playlist">
+			<div id="playlist" ondrop="drop(event)" ondragover="allowDrop(event)">
 				Playlist
 			</div>
 
