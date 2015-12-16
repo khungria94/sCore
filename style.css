@@ -213,9 +213,6 @@ button:hover {
 }
 
 #playlist {
-	padding-top: 10px;
-	color: white;
-	text-shadow: 1px 1px .1px rgba(255, 237, 102, .8);
 	overflow: auto;
 	background-color: #282828;
 	height: 85%;
@@ -225,6 +222,12 @@ button:hover {
 	border-collapse: separate;
 	vertical-align: middle;
 	padding: 1px;
+}
+
+#playlist_header {
+	color: white;
+	text-shadow: 1px 1px .1px rgba(255, 237, 102, .8);
+	padding: 10px;
 }
 
 #overlay-solid {

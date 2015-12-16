@@ -260,7 +260,7 @@ function drop(ev) {
     element.ondragstart = function(ev){ev.dataTransfer.setData("text", ev.target.id);};
     var temp = 'playlist';
     savePlaylist(temp);
-    console.log(ev.target);
+    // console.log(ev.target);
 }
 
 window.addEventListener('load', loadPlaylist('playlist'));
