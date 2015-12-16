@@ -214,8 +214,9 @@ function loadPlaylist(name) {
 			url: 'https://api.spotify.com/v1/tracks/'+ids[i],
 			success: function(data){
 				$("#playlist").append("<tr class='normal' draggable='true' ondragstart='playlistdrag(event)' id = " +
-						data.id + " data-trackid=" + data.id + "><td><img src='" +
-						data.album.images[2].url + "'></td><td>" + data.name + "</td></tr>");
+					data.id + " data-trackid=" + data.id + "><td><img src='" +
+					data.album.images[2].url + "'></td><td>" + data.name + 
+					"<br><font style='font-size:.8em; color: grey'><i>by: " + data.artists[0].name + "</i></font></td></tr>");
 				addListenersPlaylist();
 			},
 			error: function(data){
