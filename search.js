@@ -11,14 +11,14 @@ var enkey = 'FIWW1FAOTC35KFT7L';
 function expand(que) {
 	$('#results').slideDown();
 	$('#hide').slideDown();
-	$('#playlist').animate({height: '50%'});
+	$('#playlist').animate({height: '40%'});
 	search(que);
 }
 
 function hide() {
 	$('#results').slideUp();
 	$('#hide').slideUp();
-	$('#playlist').animate({height: '95%'});
+	$('#playlist').animate({height: '85%'});
 }
 
 function search(q) {
@@ -36,8 +36,10 @@ function search(q) {
 			for (var i = 0; i < data.tracks.items.length; i++) {
 				item = data.tracks.items[i];
 				$(".results_display").append("<tr class='normal' draggable='true' ondragstart='drag(event)' id = " +
-					item.id + " data-trackid=" + item.id + "><td>" + item.name + "</td></tr>");
+					item.id + " data-trackid=" + item.id + "><td><img src='" +
+					item.album.images[2].url + "'></td><td>" + item.name + "</td></tr>");
 			}
+			console.log(item);
 			addListeners();
 		},
 		error: function(data){
@@ -56,7 +58,6 @@ function addListeners(){
 		}(i))
 	}
 }
-
 
 function printSongInfo(temp,data){
 	var s = new Song(data.response.track.id,data.response.track.title, data.response.track.artist);
@@ -109,7 +110,6 @@ function extraSongInfo(temp, data){
 	var s = new Song(data.response.songs[0].id,data.response.songs[0].title, data.response.songs[0].artist_name);
 	s.getArtistInfo(artistid, artistInfo);
 }
-
 
 function artistInfo(temp, data){
 	//console.log(data);
@@ -175,14 +175,14 @@ function drop(ev) {
     ev.target.appendChild(document.getElementById(data));
 }
 
-function login() {
-    //var state = generateRandomString(16);
-    //localStorage.setItem(stateKey, state);
-    var scope = 'user-read-private user-read-email playlist-modify-public playlist-modify-private user-read-birthdate';
-    var url = 'https://accounts.spotify.com/authorize';
-    url += '?response_type=token';
-    url += '&client_id=' + encodeURIComponent(client_id);
-    url += '&scope=' + encodeURIComponent(scope);
-    url += '&redirect_uri=' + encodeURIComponent(redirect_uri);
-    window.location = url;
-}
+// function login() {
+//     //var state = generateRandomString(16);
+//     //localStorage.setItem(stateKey, state);
+//     var scope = 'user-read-private user-read-email playlist-modify-public playlist-modify-private user-read-birthdate';
+//     var url = 'https://accounts.spotify.com/authorize';
+//     url += '?response_type=token';
+//     url += '&client_id=' + encodeURIComponent(client_id);
+//     url += '&scope=' + encodeURIComponent(scope);
+//     url += '&redirect_uri=' + encodeURIComponent(redirect_uri);
+//     window.location = url;
+// }

@@ -1,7 +1,7 @@
 /* Global */
 html, body {
 	font-family: 'Montserrat';
-	background-color: #FFFAE8;
+	background-color: #FFED66;
 	height: 100%;
 
 	position: fixed; 
@@ -10,23 +10,43 @@ html, body {
     padding: 0px;
   	margin: 0px;
 }
+
+input {
+	font-family: 'Montserrat';
+	border: none;
+	background: white;
+	padding: 10px;
+}
+
 .highlight{
     background: #D1D0D0;
 }
-
 
 #button{
 	text-align: right;
 }
 
 #header {
-	background-color: #D49090;
-
+/*	background-color: #D49090;*/
 	position: fixed;
 	top: 0px;
 	width: 100%;
 	height: 35px;
 	left: 0px;
+	padding: 10px;
+	padding-left: 20px;
+}
+
+#title {
+	display: inline;
+	font-size: 3em;
+	background-color: black;
+	padding-left: 14px;
+	padding-right: 22px;
+	padding-bottom: 5px;
+	color: white;
+	text-shadow: 3px 3px .1px rgba(255, 237, 102, .8);
+	z-index: 100;
 }
 
 #content {
@@ -43,15 +63,16 @@ html, body {
 	vertical-align: middle;
 	white-space: normal;
 
-	background-color: #93D490;
+/*	background-color: #93D490;
+*/	z-index: 10;
 }
 
 #visual{
 	width: 100%;
 	height: 60%;
 	white-space: nowrap;
-	background-color: #B6DBB4;
-}
+/*	background-color: #B6DBB4;
+*/}
 
 #info{
 	width: 100%;
@@ -60,9 +81,48 @@ html, body {
 	display: inline-block;
 }
 
+.widget {
+	width: 30%;
+	min-width: 273px;
+	float: left;
+	vertical-align: center;
+	margin-right: auto;
+	margin-left: auto;
+	margin-bottom: auto;
+	margin-top: auto;
+}
 
+.table {
+	min-width: 510px;
+	width: 70%;
+	float: right;
+}
+
+.infotable {
+    font-family: "Montserrat", Arial, Helvetica, sans-serif;
+    float: left;
+    width: 100%;
+    table-layout: fixed;
+}
+
+.infotable td.col1 {
+	font-weight: bold;
+	width: 20%;
+}
+
+.infotable td, .infotable th {
+    font-size: 1em;
+    padding: 3px 7px 2px 7px;
+    text-align: left;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+}
 
 #sidebar {
+
+	font-size: .9em;
 	position: fixed;
 
 	width: 24%;
@@ -71,26 +131,72 @@ html, body {
 	margin-top: 35px;
 
 	float: right;
-	right: 0px;
+	right: 10px;
+	bottom: 10px;
 
 	/* Responsive */
 	display: inline-block;
 	text-align: center;
 	vertical-align: middle;
 	white-space: normal;
-
-	background-color: #90B5D4;
 }
 
 #search {
-	background-color: #FFB366;
-	height: 5%;
-	min-height: 25px;
+	padding-top: 10px;
+	background-color: black;
+	min-height: 45px;
+	margin-bottom: 10px;
+}
+
+#results {
+	overflow: auto;
+	background-color: white;
+	height: 42%;
+}
+
+#hide {
+	height: 3%;
+	min-height: 10px;
+	width: 100%;
+}
+
+.minimize {
+	border: none;
+	background-color: transparent;
+	outline: none; 
+	width: 100%;
+}
+
+.minimize:hover {
+	color: white;
+}
+
+.highlight{
+    background: #D1D0D0;
+}
+
+.normal{
+    background: #FAFFF3;
+}
+
+.normal:hover{
+    background-color: #ffff99;
+}
+
+.highlight:hover{
+	background-color:#ffff99;
 }
 
 #playlist {
+	overflow: auto;
 	background-color: #FFD9B3;
-	height: 95%;
+	height: 85%;
+}
+
+#playlist, td {
+	border-collapse: separate;
+	vertical-align: middle;
+	padding: 1px;
 }
 
 #overlay-solid {
@@ -124,85 +230,4 @@ html, body {
     opacity: 0.6;
     z-index: 10;
     z-index: 11;
-}
-
-#results {
-	overflow: auto;
-	background-color: white;
-	height: 42%;
-}
-
-#hide {
-	height: 3%;
-	min-height: 10px;
-	width: 100%;
-}
-
-.minimize {
-	border: none;
-	background-color: transparent;
-	outline: none; 
-	width: 100%;
-}
-
-.minimize:hover {
-	color: white;
-}
-
-.highlight{
-    background: #D1D0D0;
-}
-
-.normal{
-    background: #FAFFF3;
-
-}
-
-.normal:hover{
-    background-color: #ffff99;
-
-}
-
-.highlight:hover{
-	background-color:#ffff99;
-}
-
-.widget {
-	width: 25%;
-	float: left;
-	vertical-align: center;
-	margin-right: auto;
-	margin-left: auto;
-	margin-bottom: auto;
-	margin-top: auto;
-
-}
-
-.table {
-	width: 75%;
-	float: left;
-
-}
-
-.infotable {
-    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
-    border-collapse: collapse;
-    float: left;
-    width: 100%;
-    table-layout: fixed;
-}
-
-.infotable td.col1 {
-	width: 25%;
-}
-
-.infotable td, .infotable th {
-    font-size: 1em;
-    padding: 3px 7px 2px 7px;
-    width: 75%;
-    text-align: left;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-
 }
