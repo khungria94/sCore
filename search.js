@@ -152,10 +152,37 @@ function artistInfo(temp, data){
 
 function analyzeinfo(temp,data){
 	// console.log(data);
+
+	function pad(number, length) {
+   
+ 	   var str = '' + number;
+    	while (str.length < length) {
+        	str = '0' + str;
+   	 }
+   
+  	  return str;
+
+	}
+	function timeToString(secs) {
+		var secs = Math.round(secs);
+		var hours = pad(Math.floor(secs / (60 * 60)),2);
+
+    		var divisor_for_minutes = secs % (60 * 60);
+    		var minutes = pad(Math.floor(divisor_for_minutes / 60),2);
+
+    		var divisor_for_seconds = divisor_for_minutes % 60;
+    		var seconds = pad(Math.ceil(divisor_for_seconds),2);
+
+        	if (hours > 0) return hours + ':' + minutes + ':' + seconds;
+		return minutes + ':' + seconds;
+	}
 	var length = data.sections.map(function(sec){ return sec.duration; })
 			.reduce(function(a,b){ return a + b;});
 	var sections = data.sections.map(function(sec){
 		sec.proportion = sec.duration/length;
+		return sec;
+	}).map(function(sec){
+		sec.fromTo = timeToString(sec.start) + '-' + timeToString(sec.start + sec.duration);  
 		return sec;
 	});
 	loadVisuals(sections);
@@ -165,7 +192,7 @@ function loadVisuals(data) {
 	$('#visual > *').empty();
 	var text, tar, id, l, SHRINK_FACTOR = 0.8;
 	data.forEach(function(e,index,a){
-		html = 'This section is ' + confMap(e.key_confidence) +
+		html ='This section (' + e.fromTo + ') is ' + confMap(e.key_confidence) +
 		' in the key of ' + keyMap[e.key] + '.<br> It is ' +
 		confMap(e.mde_confidence) + ' ' + modeMap[e.mode] +
 		'.<br> The tempo here is ' + confMap(e.tempo_confidence) + ' ' +
