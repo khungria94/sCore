@@ -50,24 +50,80 @@ function addListeners(){
 	var table = document.getElementById("results_table");
 	var rows = table.rows;
 	for(var i = 0; i < rows.length; i++){
-		rows[i].addEventListener("dblclick", printSongInfo);
+		(function(index){
+			var s = new Song(rows[index].id);
+			rows[index].addEventListener("dblclick", function(){s.getTrackInfo(s.trackid,printSongInfo);},false);
+		}(i))
 	}
 }
 
-function printSongInfo(){
-	var s = new Song(this.id);
-	s.getTrackInfo(this.id);
-	//console.log(s.title + " by " + s.artist);
+function printSongInfo(temp,data){
+	var s = new Song(data.response.track.id,data.response.track.title, data.response.track.artist);
+	console.log(data);
 	var table = document.getElementById("infotable");
 	var rows = table.rows;
 	for(var i = 0; i < rows.length; i++){
-		var x = rows[i].insertCell(1);
-		x.innerHTML = s.artist;
+		if(rows[i].cells.length > 1)
+			rows[i].deleteCell(1);
 	}
-	if(this.className == 'normal')
-		this.className = 'highlight';
+	var song = rows[0].insertCell(1);
+	var artist = rows[1].insertCell(1);
+	var album = rows[2].insertCell(1);
+	var genre = rows[3].insertCell(1);
+	var bio = rows[4].insertCell(1);
+	var orgin = rows[5].insertCell(1);
+	var active = rows[6].insertCell(1);
+
+	song.innerHTML = s.title;
+	artist.innerHTML = s.artist;
+	album.innerHTML = data.response.track.release;
+	var analysis = data.response.track.audio_summary.analysis_url;
+	//console.log(analysis);
+	//s.analyze(analysis,analyzeinfo);
+	s.getSongInfo(s.title, s.artist, extraSongInfo);
+	if(this.className == 'normal'){
+		var table = document.getElementById("results_table");
+		var rows = table.rows;
+		for(var i = 0; i < rows.length; i++)
+			rows[i].className = "normal";
+		this.className = "highlight";
+	}
 	else
 		this.className = 'normal';
+}
+//am assumging that the first search result will be the one that we are playing
+function extraSongInfo(temp, data){
+	console.log(data);
+	var artistid = data.response.songs[0].artist_id;
+	var songid = data.response.songs[0].id;
+	var s = new Song(data.response.songs[0].id,data.response.songs[0].title, data.response.songs[0].artist_name);
+	s.getArtistInfo(artistid, artistInfo);
+}
+
+
+function artistInfo(temp, data){
+	console.log(data);
+	var table = document.getElementById("infotable");
+	var rows = table.rows;
+	//all genres, can make only 1
+	for(var i = 0; i < data.response.artist.genres.length; i++){
+		if(i == data.response.artist.genres.length-1)
+			rows[3].cells[1].innerHTML += data.response.artist.genres[i].name;
+		else
+			rows[3].cells[1].innerHTML += data.response.artist.genres[i].name + ', ';
+	}
+	//biographies are cut off
+	rows[4].cells[1].innerHTML = data.response.artist.biographies[0].text;
+	rows[5].cells[1].innerHTML = data.response.artist.artist_location.location;
+	rows[6].cells[1].innerHTML = data.response.artist.years_active[0].start;
+
+}
+
+//this function has all the analysis info to use for the visual part (data has all the information)
+
+function analyzeinfo(temp,data){
+	console.log(data);
+
 }
 
 

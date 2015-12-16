@@ -66,11 +66,12 @@ Song.prototype.getTrackInfo = function getTrackInfo(trackId, cb) {
 		data: {
 			api_key: enkey,
 			format: 'jsonp',
-			id: 'spotify:track:' + (trackId || this.trackid), 
+			id: 'spotify:track:' + (trackId), 
 			bucket: 'audio_summary'
 		},
 		dataType: 'jsonp',
 		success: function ENTrackSuccess(data, status, jqxhr){
+			console.log(trackId);
 			console.log(data);
 
 			if (data && data.response && data.response.track) {
@@ -89,6 +90,7 @@ Song.prototype.getTrackInfo = function getTrackInfo(trackId, cb) {
 			if (cb) cb(null, data);
 		},
 		error: function ENTrackErr(jqxhr, status, err){
+			console.log(trackId);
 			console.warn(jqxhr, status, err); if (cb) cb(err);
 		}
 	});
@@ -121,7 +123,7 @@ Song.prototype.getSongInfo = function getSongInfo(title, artist, cb) {
 }
 
 
-Song.prototype.getArtistInfo = function(artistId, cb) {
+Song.prototype.getArtistInfo = function getArtistInfo(artistId, cb) {
 	if (typeof artistId === 'function' && cb === undefined) { cb = artistId; artistId = null; }
 	var self = this;
 	
@@ -129,7 +131,7 @@ Song.prototype.getArtistInfo = function(artistId, cb) {
 		url: 'http://developer.echonest.com/api/v4/artist/profile?',
 		data: {
 			api_key: enkey,
-			id: artistId || this.artistId,
+			id: this.artistId || artistId,
 			format: 'jsonp',
 			bucket: ['biographies', 'doc_counts', 'genre', 'images', 'artist_location', 'songs', 'terms', 'years_active']
 		},
@@ -157,7 +159,7 @@ Song.prototype.getArtistInfo = function(artistId, cb) {
 
 }
 
-Song.prototype.analyze = function(url, cb){
+Song.prototype.analyze = function analyze(url, cb){
 	if (typeof url === 'string' && cb === undefined) { cb = url; url = null; }
 	
 	var self = this;
