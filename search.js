@@ -213,7 +213,7 @@ function loadPlaylist(name) {
 			$.ajax({
 			url: 'https://api.spotify.com/v1/tracks/'+ids[i],
 			success: function(data){
-				$("#playlist").append("<tr class='normal' draggable='true' ondragstart='drag(event)' id = " +
+				$("#playlist").append("<tr class='normal' draggable='true' ondragstart='playlistdrag(event)' id = " +
 						data.id + " data-trackid=" + data.id + "><td><img src='" +
 						data.album.images[2].url + "'></td><td>" + data.name + "</td></tr>");
 				addListenersPlaylist();
@@ -239,12 +239,25 @@ function drag(ev) {
     $('#overlay-border').css('display', 'inherit');
 }
 
+function playlistdrag(ev) {
+    ev.dataTransfer.setData("text", ev.target.id);
+}
+
+function deletedrop(ev){
+	var data = ev.dataTransfer.getData("text");
+	var x = document.getElementById(data);
+	x.parentNode.removeChild(x);
+	savePlaylist('playlist');
+}
+
 function drop(ev) {
     ev.preventDefault();
     $('#overlay-border').css('display', 'none');
     $('#overlay-solid').css('display', 'none');
     var data = ev.dataTransfer.getData("text");
-    document.getElementById('playlist').appendChild(document.getElementById(data));
+    var element = document.getElementById(data);
+    document.getElementById('playlist').appendChild(element);
+    element.ondragstart = function(ev){ev.dataTransfer.setData("text", ev.target.id);};
     var temp = 'playlist';
     savePlaylist(temp);
     console.log(ev.target);
