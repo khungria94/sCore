@@ -231,3 +231,11 @@ input {
     z-index: 10;
     z-index: 11;
 }
+
+.vizsection {
+	height: 80%;
+	float: left;
+	background-color: red;
+	border: yellow 4px solid;
+
+}

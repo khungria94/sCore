@@ -79,7 +79,7 @@ function printSongInfo(temp,data){
 	artist.innerHTML = s.artist;
 	album.innerHTML = data.response.track.release;
 	var analysis = data.response.track.audio_summary.analysis_url;
-	//s.analyze(analysis,analyzeinfo);
+	s.analyze(analysis,analyzeinfo);
 	s.getSongInfo(s.title, s.artist, extraSongInfo);
 	var table = document.getElementById("results_table");
 	var rows = table.rows;
@@ -133,8 +133,40 @@ function artistInfo(temp, data){
 //This is commented out in the PrintSongInfo method
 
 function analyzeinfo(temp,data){
-	console.log(data);
+	// console.log(data);
+	var length = data.sections.map(function(sec){ return sec.duration; })
+			.reduce(function(a,b){ return a + b;});
+	var sections = data.sections.map(function(sec){ 
+		sec.proportion = sec.duration/length;
+		return sec; 
+	});
+	loadVisuals(sections);
+}
 
+function loadVisuals(data) {
+	$('#visual').empty();
+	
+	data.forEach(function(e,index,a){
+		$('<div>', {
+			'id': 'vizinfo-' + index,
+			'text': e.mode + ' Mode'
+		}).appendTo('#visual');
+
+		$('<div>', {
+			'width': 100 * e.proportion + '%',
+			'class': 'vizsection',
+			'id': 'vs-' + index
+		})
+		.click(function(ev) {
+			var tar = ev.currentTarget,
+			id = tar.id.split('-')[1], l = a.length;
+			for (var i = 0; i < l; i++){
+				if (i == id) { console.log($('#vizinfo-' + id).show()); }
+				else $('#vizinfo-' + i).hide();
+			}
+		})
+		.appendTo('#visual');
+	});
 }
 
 function savePlaylist(name) {
