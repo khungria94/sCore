@@ -177,13 +177,11 @@ button:hover {
 }
 
 .infotable td, .infotable th {
-    font-size: 1em;
+	overflow: auto;
+    font-size: .95em;
     padding: 3px 7px 2px 7px;
     text-align: left;
     white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-
 }
 
 #sidebar {
@@ -311,16 +309,23 @@ button:hover {
 }
 
 .vizsection {
-	height: 80%;
+	height: 75%;
 	float: left;
 	background-color: red;
 	border: yellow 4px solid;
 }
 
 #viz-sects {
-	height: 75%;
+	height: 65%;
 }
 
 #viz-info {
-	height: 25%;
+	float: left;
+	text-align: left;
+	padding: 15px;
+	font-size: .95em;
+	display: inline-block;
+	background-color: #282828;
+	color: white;
+	/*height: 25%;*/
 }
