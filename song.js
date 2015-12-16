@@ -18,8 +18,8 @@ function tempoMap(tempo) {
 	else return 'Allegro';
 }
 function confMap(conf) {
-	if (conf < .5) return 'Maybe';
-	else return 'Definitely';
+	if (conf < 0.5) return 'maybe';
+	else return 'definitely';
 }
 
 function Song(trackid, title, artist) {
@@ -28,7 +28,7 @@ function Song(trackid, title, artist) {
 	this.title = title || '';
 	this.artist = artist || '';
 	return this;
-};
+}
 
 Song.prototype.addToPlaylist = function(playlistId, cb) {
 	var url = 'https://api.spotify.com/v1/users/' + user_id + '/playlists/' + playlistId + '/tracks', self = this;
@@ -66,7 +66,7 @@ Song.prototype.getTrackInfo = function getTrackInfo(trackId, cb) {
 		data: {
 			api_key: enkey,
 			format: 'jsonp',
-			id: 'spotify:track:' + (trackId), 
+			id: 'spotify:track:' + (trackId),
 			bucket: 'audio_summary'
 		},
 		dataType: 'jsonp',
@@ -75,12 +75,12 @@ Song.prototype.getTrackInfo = function getTrackInfo(trackId, cb) {
 			console.log(data);
 
 			if (data && data.response && data.response.track) {
-		
+
 			self.analysis_url = data.response.track.audio_summary &&
 			data.response.track.audio_summary.analysis_url;
 			self.title = data.response.track.title;
 			self.artist = data.response.track.artist;
-		
+
 			} else { /*TODO*/ return; }
 
 			/*$.getJSON(analysis_url, function analSuc(data,status,jqxhr){
@@ -101,11 +101,11 @@ Song.prototype.getTrackInfo = function getTrackInfo(trackId, cb) {
 Song.prototype.getSongInfo = function getSongInfo(title, artist, cb) {
 	// Populates song's artistId
 	if (typeof title === 'function' && cb === undefined) { cb = title; title = null; }
-	else if (typeof title === 'string' && typeof artist === 'function' && 
+	else if (typeof title === 'string' && typeof artist === 'function' &&
 		cb === undefined) { cb = artist; artist = null; }
 
 	var self = this;
-	
+
 	$.ajax({
 		url: 'http://developer.echonest.com/api/v4/song/search',
 		data: {
@@ -117,7 +117,7 @@ Song.prototype.getSongInfo = function getSongInfo(title, artist, cb) {
 		dataType: 'jsonp',
 		success: function(data, status) {console.log(data); self.artistId = data.response && data.response.songs && data.response.songs[0] && data.response.songs[0].artist_id; console.log(self); if (cb) cb(null, data); },
 		error: function(jqxhr, status, err) { console.warn(jqxhr, status, err); if (cb) cb(err); }
-		
+
 	});
 	return this;
 }
@@ -126,7 +126,7 @@ Song.prototype.getSongInfo = function getSongInfo(title, artist, cb) {
 Song.prototype.getArtistInfo = function getArtistInfo(artistId, cb) {
 	if (typeof artistId === 'function' && cb === undefined) { cb = artistId; artistId = null; }
 	var self = this;
-	
+
 	$.ajax({
 		url: 'http://developer.echonest.com/api/v4/artist/profile?',
 		data: {
@@ -152,7 +152,7 @@ Song.prototype.getArtistInfo = function getArtistInfo(artistId, cb) {
 			if (cb) cb(null, data);
 		 },
 		error: function(jqxhr, status, err) { console.warn(jqxhr, status, err); if (cb) cb(err); }
-		
+
 	});
 
 	return this;
@@ -161,7 +161,7 @@ Song.prototype.getArtistInfo = function getArtistInfo(artistId, cb) {
 
 Song.prototype.analyze = function analyze(url, cb){
 	if (typeof url === 'string' && cb === undefined) { cb = url; url = null; }
-	
+
 	var self = this;
 	$.getJSON(url || self.analysis_url, function(data,status,jqxhr){
 		self.analysis = {
@@ -176,13 +176,13 @@ Song.prototype.analyze = function analyze(url, cb){
 		timeSigConf: confMap(data.track.time_signature_confidence)
 		};	console.log('anal-', data, self.analysis); if (cb) cb(null, data);
 	});
-	
+
 }
 
 Song.prototype.getAllInfo = function() {
 	var self = this;
-	this.getTrackInfo(function(){ self.getSongInfo(function(){ 
-		self.getArtistInfo(function() { self.analyze();}); 
+	this.getTrackInfo(function(){ self.getSongInfo(function(){
+		self.getArtistInfo(function() { self.analyze();});
 	}); });
 }
 

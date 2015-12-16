@@ -136,32 +136,40 @@ function analyzeinfo(temp,data){
 	// console.log(data);
 	var length = data.sections.map(function(sec){ return sec.duration; })
 			.reduce(function(a,b){ return a + b;});
-	var sections = data.sections.map(function(sec){ 
+	var sections = data.sections.map(function(sec){
 		sec.proportion = sec.duration/length;
-		return sec; 
+		return sec;
 	});
 	loadVisuals(sections);
 }
 
 function loadVisuals(data) {
 	$('#visual').empty();
-	
+	var text, tar, id, l, SHRINK_FACTOR = 0.8;
 	data.forEach(function(e,index,a){
+		html = 'This section is ' + confMap(e.key_confidence) +
+		' in the key of ' + keyMap[e.key] + '.<br> It is ' +
+		confMap(e.mde_confidence) + ' ' + modeMap[e.mode] +
+		'.<br> The tempo here is ' + confMap(e.tempo_confidence) + ' ' +
+		e.tempo + ' (' + tempoMap(e.tempo) + ').<br> And the time signature is ' +
+		confMap(e.time_signature_confidence) + ' ' +
+		(e.time_signature > 1 ? e.time_signature + '/4.' : ' complex or changing.');
 		$('<div>', {
 			'id': 'vizinfo-' + index,
-			'text': e.mode + ' Mode'
+			'html': html
 		}).appendTo('#visual');
 
 		$('<div>', {
-			'width': 100 * e.proportion + '%',
+			'width': (100 * e.proportion * SHRINK_FACTOR) + '%',
 			'class': 'vizsection',
 			'id': 'vs-' + index
 		})
 		.click(function(ev) {
-			var tar = ev.currentTarget,
-			id = tar.id.split('-')[1], l = a.length;
+			tar = ev.currentTarget;
+			id = tar.id.split('-')[1];
+			l = a.length;
 			for (var i = 0; i < l; i++){
-				if (i == id) { console.log($('#vizinfo-' + id).show()); }
+				if (i == id) $('#vizinfo-' + id).show();
 				else $('#vizinfo-' + i).hide();
 			}
 		})
