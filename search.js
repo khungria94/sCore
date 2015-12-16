@@ -59,7 +59,6 @@ function addListeners(){
 
 function printSongInfo(temp,data){
 	var s = new Song(data.response.track.id,data.response.track.title, data.response.track.artist);
-	console.log(data);
 	var table = document.getElementById("infotable");
 	var rows = table.rows;
 	for(var i = 0; i < rows.length; i++){
@@ -78,7 +77,6 @@ function printSongInfo(temp,data){
 	artist.innerHTML = s.artist;
 	album.innerHTML = data.response.track.release;
 	var analysis = data.response.track.audio_summary.analysis_url;
-	//console.log(analysis);
 	//s.analyze(analysis,analyzeinfo);
 	s.getSongInfo(s.title, s.artist, extraSongInfo);
 	if(this.className == 'normal'){
@@ -93,7 +91,7 @@ function printSongInfo(temp,data){
 }
 //am assumging that the first search result will be the one that we are playing
 function extraSongInfo(temp, data){
-	console.log(data);
+	//console.log(data);
 	var artistid = data.response.songs[0].artist_id;
 	var songid = data.response.songs[0].id;
 	var s = new Song(data.response.songs[0].id,data.response.songs[0].title, data.response.songs[0].artist_name);
@@ -102,7 +100,7 @@ function extraSongInfo(temp, data){
 
 
 function artistInfo(temp, data){
-	console.log(data);
+	//console.log(data);
 	var table = document.getElementById("infotable");
 	var rows = table.rows;
 	//all genres, can make only 1
