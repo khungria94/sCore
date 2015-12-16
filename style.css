@@ -167,6 +167,11 @@ html, body {
 .widget {
 	width: 25%;
 	float: left;
+	vertical-align: center;
+	margin-right: auto;
+	margin-left: auto;
+	margin-bottom: auto;
+	margin-top: auto;
 
 }
 

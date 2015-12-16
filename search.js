@@ -88,6 +88,8 @@ function printSongInfo(temp,data){
 	}
 	else
 		this.className = 'normal';
+	var spotifyid = data.response.track.foreign_id;
+	document.getElementById("frameid").src = "https://embed.spotify.com/?uri=" + spotifyid;
 }
 //am assumging that the first search result will be the one that we are playing
 function extraSongInfo(temp, data){
