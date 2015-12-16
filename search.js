@@ -37,7 +37,7 @@ function search(q) {
 				item = data.tracks.items[i];
 				$(".results_display").append("<tr class='normal' draggable='true' ondragstart='drag(event)' id = " +
 					item.id + " data-trackid=" + item.id + "><td><img src='" +
-					item.album.images[2].url + "'></td><td>" + item.name + "<br><font style='font-size:.8em; color: grey'><i>by: " + item.artists[0].name + "</i></font></td></tr>");
+					item.album.images[2].url + "'></td><td>" + item.name + "</td></tr>");
 			}
 			console.log(item);
 			addListeners();
@@ -79,7 +79,7 @@ function printSongInfo(temp,data){
 	artist.innerHTML = s.artist;
 	album.innerHTML = data.response.track.release;
 	var analysis = data.response.track.audio_summary.analysis_url;
-	s.analyze(analysis,analyzeinfo);
+	//s.analyze(analysis,analyzeinfo);
 	s.getSongInfo(s.title, s.artist, extraSongInfo);
 	var table = document.getElementById("results_table");
 	var rows = table.rows;
@@ -204,7 +204,8 @@ function drop(ev) {
     $('#overlay-border').css('display', 'none');
     $('#overlay-solid').css('display', 'none');
     var data = ev.dataTransfer.getData("text");
-    ev.target.appendChild(document.getElementById(data));
+    document.getElementById('playlist').appendChild(document.getElementById(data));
+    //console.log(ev.target);
 }
 
 // function login() {
