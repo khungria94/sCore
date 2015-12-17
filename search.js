@@ -202,8 +202,8 @@ function loadVisuals(data) {
 	data.forEach(function(e,index,a){
 		html ='This section (' + e.fromTo + ') is ' + confMap(e.key_confidence) +
 		' in the key of ' + keyMap[e.key] + '.<br> It is ' +
-		confMap(e.mde_confidence) + ' ' + modeMap[e.mode] +
-		'.<br> The tempo here is ' + confMap(e.tempo_confidence) + ' ' +
+		confMap(e.mde_confidence) + ' in a ' + modeMap[e.mode] +
+		' key.<br> The tempo here is ' + confMap(e.tempo_confidence) + ' ' +
 		e.tempo + ' (' + tempoMap(e.tempo) + ').<br> And the time signature is ' +
 		confMap(e.time_signature_confidence) + ' ' +
 		(e.time_signature > 1 ? e.time_signature + '/4.' : ' complex or changing.');
@@ -287,8 +287,8 @@ function playlistdrag(ev) {
 
 function deletedrop(ev){
 	ev.preventDefault();
-	$('#content-border').css('display', 'none');
-    $('#content-solid').css('display', 'none');
+	$('#content-border, #overlay-border').css('display', 'none');
+    $('#content-solid, #overlay-solid').css('display', 'none');
 	var data = ev.dataTransfer.getData("text");
 	var x = document.getElementById(data);
 	x.parentNode.removeChild(x);
