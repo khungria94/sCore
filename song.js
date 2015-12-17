@@ -91,16 +91,11 @@ Song.prototype.getTrackInfo = function getTrackInfo(trackId, cb) {
 			self.title = data.response.track.title;
 			self.artist = data.response.track.artist;
 
-			} else { /*TODO*/ return; }
+			} else { return cb('No results'); }
 
-			/*$.getJSON(analysis_url, function analSuc(data,status,jqxhr){
-				console.log('anal-', data);
-			});*/
-			//	self.analyze(analysis_url);
 			if (cb) cb(null, data);
 		},
 		error: function ENTrackErr(jqxhr, status, err){
-			console.log(trackId);
 			console.warn(jqxhr, status, err); if (cb) cb(err);
 		}
 	});
@@ -189,10 +184,10 @@ Song.prototype.analyze = function analyze(url, cb){
 
 }
 
-Song.prototype.getAllInfo = function() {
+Song.prototype.getAllInfo = function(cb) {
 	var self = this;
 	this.getTrackInfo(function(){ self.getSongInfo(function(){
-		self.getArtistInfo(function() { self.analyze();});
+		self.getArtistInfo(function() { self.analyze(cb);});
 	}); });
 }
 

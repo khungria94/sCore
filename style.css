@@ -307,7 +307,7 @@ button:hover {
 	height: 75%;
 	float: left;
 	background-color: red;
-	border: yellow 4px solid;
+	border: #FFED66 2px solid;
 }
 
 #viz-sects {

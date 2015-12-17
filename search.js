@@ -33,6 +33,7 @@ function search(q) {
 		success: function(data){
 			$(".results_display").empty();
 			var item;
+			if (data && data.tracks && data.tracks.items)
 			for (var i = 0; i < data.tracks.items.length; i++) {
 				item = data.tracks.items[i];
 				$(".results_display").append("<tr class='normal' draggable='true' ondragstart='drag(event)' id = " +
@@ -40,11 +41,13 @@ function search(q) {
 					item.album.images[2].url + "'></td><td>" + item.name + 
 					"<br><font style='font-size:.8em; color: grey'><i>by: " + item.artists[0].name + "</i></font></td></tr>");
 			}
+			else $('.results_display').append('<tr class="normal"><td>Sorry. No results for that track.</td></tr>'); 
 			//console.log(item);
 			addListeners();
 		},
 		error: function(data){
 			console.log(data);
+			alert('Sorry! I don\'t know what went wrong. Try again. :(');
 		}
 	});
 }
@@ -78,6 +81,8 @@ function addListeners(){
 }
 
 function printSongInfo(temp,data){
+	if (temp) alert('Sorry! I don\'t know what went wrong. Try again. :(');
+
 	var s = new Song(data.response.track.id,data.response.track.title, data.response.track.artist);
 	var table = document.getElementById("infotable");
 	var rows = table.rows;
@@ -122,7 +127,8 @@ function printSongInfo(temp,data){
 }
 //am assumging that the first search result will be the one that we are playing
 function extraSongInfo(temp, data){
-	//console.log(data);
+	if (temp) alert('Sorry! I don\'t know what went wrong. Try again. :(');
+	
 	var artistid = data.response.songs[0].artist_id;
 	var songid = data.response.songs[0].id;
 	var s = new Song(data.response.songs[0].id,data.response.songs[0].title, data.response.songs[0].artist_name);
@@ -130,7 +136,8 @@ function extraSongInfo(temp, data){
 }
 
 function artistInfo(temp, data){
-	//console.log(data);
+	if (temp) alert('Sorry! I don\'t know what went wrong. Try again. :(');
+	
 	var table = document.getElementById("infotable");
 	var rows = table.rows;
 	//all genres, can make only 1
@@ -151,6 +158,7 @@ function artistInfo(temp, data){
 //This is commented out in the PrintSongInfo method
 
 function analyzeinfo(temp,data){
+	if (temp) alert('Sorry! I don\'t know what went wrong. Try again. :(');
 	// console.log(data);
 
 	function pad(number, length) {
@@ -250,6 +258,7 @@ function loadPlaylist(name) {
 				addListenersPlaylist();
 			},
 			error: function(data){
+				 alert('Sorry! I don\'t know what went wrong. Try again. :(');
 				console.log(data);
 			}
 		});
