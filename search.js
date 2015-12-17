@@ -301,8 +301,8 @@ function deletedrop(ev){
 
 function drop(ev) {
     ev.preventDefault();
-    $('#overlay-border').css('display', 'none');
-    $('#overlay-solid').css('display', 'none');
+    $('#overlay-border, #content-border').css('display', 'none');
+    $('#overlay-solid, #content-solid').css('display', 'none');
     var data = ev.dataTransfer.getData("text");
     var element = document.getElementById(data);
     document.getElementById('playlist').appendChild(element);
