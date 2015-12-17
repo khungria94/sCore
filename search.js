@@ -148,7 +148,11 @@ function artistInfo(temp, data){
 			rows[3].cells[1].innerHTML += data.response.artist.genres[i].name + ', ';
 	}
 	//biographies are cut off
-	rows[4].cells[1].innerHTML = data.response.artist.biographies[0].text;
+	rows[4].cells[1].innerHTML = (function(bios){
+		console.log(bios); var full = bios.filter(x => !x.truncated);
+		if (full.length) return full[0].text + ' <a href="' +  full[0].url + '">See Original on ' + full[0].site + '. </a>';
+		else return bios[0].text  + ' <a href="' + bios[0].url + '">See Original on ' + bios[0].site + '. </a>';
+	})(data.response.artist.biographies);
 	rows[5].cells[1].innerHTML = data.response.artist.artist_location.location;
 	rows[6].cells[1].innerHTML = data.response.artist.years_active[0].start;
 
